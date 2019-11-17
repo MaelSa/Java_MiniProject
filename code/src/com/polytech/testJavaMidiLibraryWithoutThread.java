@@ -58,12 +58,7 @@ public class testJavaMidiLibraryWithoutThread{
 //        for(Track t : tracks){
 //            System.out.println(t);
 //        }
-        MidiMessage midiMessage = new MidiMessage(new byte[]) {
-            @Override
-            public Object clone() {
-                return null;
-            }
-        };
+        
         playMidi1.midi.start();
     }
 }
