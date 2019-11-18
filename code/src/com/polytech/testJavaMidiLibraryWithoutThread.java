@@ -58,7 +58,7 @@ public class testJavaMidiLibraryWithoutThread{
 //        for(Track t : tracks){
 //            System.out.println(t);
 //        }
-        
+
         playMidi1.midi.start();
     }
 }
