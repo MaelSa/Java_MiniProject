@@ -17,7 +17,7 @@ public class testSocketServer {
             String msg = dis.readUTF();//使用readUTF读取字符串
 
             DataOutputStream dos = new DataOutputStream(os);//把输出流封装在DataOutputStream中
-            dos.writeUTF("hey!");//使用writeUTF发送字符串
+            dos.writeUTF("Message received");//使用writeUTF发送字符串
             dos.close();
 
             dis.close();
@@ -30,6 +30,25 @@ public class testSocketServer {
             return null;
         }
     }
+
+    public void SendMessage(String string){
+        try {
+            ServerSocket ss = null;
+            ss = new ServerSocket(PORT);
+            Socket s = ss.accept();
+
+            OutputStream os = s.getOutputStream();
+
+            DataOutputStream dos = new DataOutputStream(os);//把输出流封装在DataOutputStream中
+            dos.writeUTF(string);//使用writeUTF发送字符串
+            dos.close();
+            s.close();
+            ss.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     //This function is not used, but can run without problems
     public void test(){
@@ -74,7 +93,8 @@ public class testSocketServer {
 
     public static void main(String[] args) {
         testSocketServer testsocketserver = new testSocketServer();
-        String message = testsocketserver.receiveMessage();
-        System.out.println("received: "+message);
+//        String message = testsocketserver.receiveMessage();
+//        System.out.println("received: "+message);
+        testsocketserver.SendMessage("Vive la France!");
     }
 }

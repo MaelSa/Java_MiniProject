@@ -73,6 +73,6 @@ public class testSocketClient {
     public static void main(String[] args) {
         testSocketClient testsocketclient = new testSocketClient();
         String reply = testsocketclient.sendMessage("polytech nantes...");
-        System.out.println("reply: "+reply);
+//        System.out.println("reply: "+reply);
     }
 }
