@@ -9,43 +9,12 @@ import java.util.Scanner;
 public class testSocketClient {
     private static final String IP = "10.188.244.45";//"127.0.0.1";//
     private static final int PORT = 8088;
-
-    //This function is not used, but can run without problems
-    public void test(String messageSent){
-        try {
-            Socket socket = new Socket(IP, PORT);
-
-            //get socket read & write stream
-            OutputStream os = socket.getOutputStream();
-            PrintWriter printWriter = new PrintWriter(os);
-
-            //input stream
-            InputStream is = socket.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
-
-            //send message out from client to server
-            printWriter.write(messageSent);
-            printWriter.flush();
-            socket.shutdownOutput();
-
-            //get reply
-            String reply = null;
-            while (!((reply=bufferedReader.readLine())==null)){
-                System.out.println("reply: "+reply);
-            }
-
-            //close all
-            bufferedReader.close();
-            is.close();
-            printWriter.close();
-            os.close();
-            socket.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private testClient clientThatContainMyself;
+    public testSocketClient(){
+        this.clientThatContainMyself = new testClient();
     }
 
+    //String communication only
     public String sendMessage(String message){
         try {
             Socket s = new Socket(IP, PORT);
@@ -70,9 +39,49 @@ public class testSocketClient {
         }
     }
 
+    public void getFile(String fileName){
+        try {
+            Socket s = new Socket(IP, PORT);
+            OutputStream os = s.getOutputStream();
+            InputStream is = s.getInputStream();
+
+            DataOutputStream dos = new DataOutputStream(os);//把输出流封装在DataOutputStream中
+            dos.writeUTF(fileName);//使用writeUTF发送字符串
+            dos.close();
+
+            FileOutputStream fos = new FileOutputStream("received.jpg"  /*fileName*/);
+            byte[] buff = new byte[1024];
+            int length = 0;//actual received length
+            while((length = is.read(buff))!=-1){
+                fos.write(buff,0,length);
+            }
+            fos.flush();
+
+            s.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            //return null;
+        }
+    }
+
+
+
+
+
     public static void main(String[] args) {
         testSocketClient testsocketclient = new testSocketClient();
-        String reply = testsocketclient.sendMessage("polytech nantes...");
-//        System.out.println("reply: "+reply);
+        String reply = testsocketclient.sendMessage("anything");
+        System.out.println("reply: "+reply);
+
+        testSocketClient testsocketclient2 = new testSocketClient();
+        String reply2 = testsocketclient2.sendMessage("list");
+        System.out.println("reply: "+reply2);
+
+//        testSocketClient testsocketclient3 = new testSocketClient();
+//        testsocketclient3.getFile("");
+
+
+
     }
 }
