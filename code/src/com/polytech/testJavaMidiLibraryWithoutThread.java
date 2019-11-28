@@ -1,6 +1,6 @@
 package com.polytech;
 
-import sun.awt.windows.ThemeReader;
+//import sun.awt.windows.ThemeReader;
 
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
@@ -13,6 +13,7 @@ import java.io.*;
 
 
 public class testJavaMidiLibraryWithoutThread{
+
     File sound;
     Sequence seq;
     Sequencer midi;
