@@ -6,7 +6,10 @@ import javax.sound.midi.MetaMessage;
 public class LyricsListener implements MetaEventListener {
     @Override
     public void meta(MetaMessage metaMessage) {
-        int type = metaMessage.getType();
-        System.out.println(type);
+        if(metaMessage.getType()==5){
+            String string = new String(metaMessage.getData());
+            System.out.println(string);
+        }
+
     }
 }

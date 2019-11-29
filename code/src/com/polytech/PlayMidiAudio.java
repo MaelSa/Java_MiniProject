@@ -1,4 +1,4 @@
-package com.polytech;//package com.javacodegeeks.snippets.desktop;
+package com.polytech;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -20,7 +20,7 @@ public class PlayMidiAudio {
         sequencer.open();
 
         // create a stream from a file
-        InputStream is = new BufferedInputStream(new FileInputStream(new File("Dancing.mid")));
+        InputStream is = new BufferedInputStream(new FileInputStream(new File("code/dancing.mid")));
 
         // Sets the current sequence on which the sequencer operates.
         // The stream must point to MIDI file data.
