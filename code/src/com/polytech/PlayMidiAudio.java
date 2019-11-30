@@ -20,7 +20,7 @@ public class PlayMidiAudio {
         sequencer.open();
 
         // create a stream from a file
-        InputStream is = new BufferedInputStream(new FileInputStream(new File("code/dancing.mid")));
+        InputStream is = new BufferedInputStream(new FileInputStream(new File("code/Hotel.mid")));
 
         // Sets the current sequence on which the sequencer operates.
         // The stream must point to MIDI file data.
