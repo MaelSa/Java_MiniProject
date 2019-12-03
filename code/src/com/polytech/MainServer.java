@@ -3,6 +3,7 @@ package com.polytech;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainServer {
@@ -18,6 +19,8 @@ public class MainServer {
     private GeneralData generalData;
     private FileInputStream fileInputStream;
     private FileOutputStream fileOutputStream;
+    private ArrayList<String> availableSongsList;
+    private String availableSongsString;
     MainServer(){
         try {
             servsock = new ServerSocket(5000);
@@ -29,6 +32,17 @@ public class MainServer {
             client_name = dataInputStream.readUTF();
             System.out.println("Waiting for client's name");
             System.out.println(client_name);
+            outputStream = client.getOutputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        availableSongsList = findAllMidiFiles.midiFilesArrayList(new File("code"),new ArrayList<String>());
+        availableSongsString = findAllMidiFiles.midiFilesString(new File("code"), "");
+    }
+    public void sendSongList(){
+        try {
+            this.dataOutputStream.writeUTF(this.availableSongsString);
+            this.dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -32,7 +32,11 @@ public class MainClient {
             e.printStackTrace();
         }
     }
-    public void choose_song(){
+    public String receiveSongList() throws IOException {
+        this.inputStream = socket.getInputStream();
+        this.dataInputStream = new DataInputStream(this.inputStream);
+        String songList = this.dataInputStream.readUTF();
+        return songList;
     }
 
     public void receiveSongFile() throws Exception{
