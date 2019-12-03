@@ -13,7 +13,11 @@ public class MainServer {
     private DataInputStream dataInputStream;
     private OutputStream outputStream;
     private DataOutputStream dataOutputStream;
+    private BufferedOutputStream bufferedOutputStream;
+    private BufferedInputStream bufferedInputStream;
     private GeneralData generalData;
+    private FileInputStream fileInputStream;
+    private FileOutputStream fileOutputStream;
     MainServer(){
         try {
             servsock = new ServerSocket(5000);
@@ -44,6 +48,20 @@ public class MainServer {
         o.writeObject(this.generalData);
         o.close();
         f.close();
+    }
+    public void sendChosenSong(String song) throws Exception{
+        String songmid = song + ".mid";
+        File songsend = new File(songmid);
+        byte [] mybytearray  = new byte [(int)songsend.length()];
+        this.fileInputStream = new FileInputStream(songsend);
+        this.bufferedInputStream = new BufferedInputStream(fileInputStream);
+        this.bufferedInputStream.read(mybytearray, 0, mybytearray.length);
+        this.outputStream = this.client.getOutputStream();
+        this.outputStream.write(mybytearray, 0, mybytearray.length);
+        this.outputStream.flush();
+        System.out.println("Song sent");
+        this.bufferedInputStream.close();
+        this.outputStream.close();
     }
     public static void main(String[] args) {
         MainServer server = new MainServer();

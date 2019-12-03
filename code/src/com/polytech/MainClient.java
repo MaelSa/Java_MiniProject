@@ -11,6 +11,8 @@ public class MainClient {
     private DataOutputStream dataOutputStream;
     private InputStream inputStream;
     private DataInputStream dataInputStream;
+    private FileOutputStream fileOutputStream;
+    private BufferedOutputStream bufferedOutputStream;
     MainClient(){
         try {
             System.out.println("Attempting to reach server");
@@ -24,12 +26,30 @@ public class MainClient {
             System.out.println("Username is: " + name);  // Output user input
             dataOutputStream.writeUTF(name);
             dataOutputStream.flush();
+            dataOutputStream.close();
+            outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void choose_song(){
+    }
 
+    public void receiveSongFile() throws Exception{
+        int bytesread;
+        int current = 0;
+        byte [] mybyte = new byte[602238600];
+        this.inputStream = socket.getInputStream();
+        this.fileOutputStream = new FileOutputStream("code/received.mid");
+        this.bufferedOutputStream = new BufferedOutputStream(this.fileOutputStream);
+        bytesread = inputStream.read(mybyte, 0, mybyte.length);
+        current = bytesread;
+        do{
+            bytesread = inputStream.read(mybyte, current, (mybyte.length - current));
+            if(bytesread >= 0) current += bytesread;
+        } while(bytesread > -1);
+        this.bufferedOutputStream.write(mybyte,0, current);
+        this.bufferedOutputStream.flush();
     }
 
     public static void main(String[] args) {
