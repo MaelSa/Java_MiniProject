@@ -4,7 +4,7 @@ import java.io.File;
 public class findAllMidiFiles {
     public static void main(String args[]){
         String result = "";
-        result = find(new File("D:\\JavaMiniProject\\files"), "");
+        result = find(new File("code"), "");
         System.out.println(result);
     }
 
@@ -26,3 +26,4 @@ public class findAllMidiFiles {
         return result;
     }
 }
+
