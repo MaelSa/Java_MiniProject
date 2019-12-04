@@ -2,6 +2,7 @@ package com.polytech;
 
 import javafx.util.Pair;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -19,12 +20,13 @@ public class GeneralData implements java.io.Serializable{
     public void add_song(String songname){
         //int size = songname.length();
         //String clean_name = songname.substring(size - 5, size - 1);
-        this.songs_info.put(songname, 0);
+        this.songs_info.put(songname, 1);
         //System.out.println("Song" + clean_name + " added to song info");
     }
 
     public void add_player(String player){
-        this.players_info.put(player, 0);
+
+        this.players_info.put(player, 1);
     }
 
     public void update_song_player(String song, String player){
@@ -44,9 +46,9 @@ public class GeneralData implements java.io.Serializable{
         //find a way to update both hashtables
     }
 
-    public HashMap<String, Integer> getMostPlayedSong(){
-        HashMap<String, Integer> pair = new HashMap<>();
-        int maxPlayedNumber = 0;
+    public ArrayList<String> getMostPlayedSong(){
+        ArrayList<String> pair = new ArrayList<String>();
+        Integer maxPlayedNumber = 0;
         String maxPlayedSong = "";
         String key;
         Integer value;
@@ -58,17 +60,18 @@ public class GeneralData implements java.io.Serializable{
                 maxPlayedSong = key;
             }
             }
-        pair.put(maxPlayedSong, maxPlayedNumber);
+        pair.add(maxPlayedSong);
+        pair.add(maxPlayedNumber.toString());
         return pair;
         }
 
-    public HashMap<String, Integer> getMostActivePlayer(){
-        HashMap<String, Integer> pair = new HashMap<>();
-        int maxPlayedNumber = 0;
+    public ArrayList<String> getMostActivePlayer(){
+        ArrayList<String> pair = new ArrayList<String>();
+        Integer maxPlayedNumber = 0;
         String maxPlayername = "";
         String key;
         Integer value;
-        for (Map.Entry<String, Integer> entry : this.songs_info.entrySet()) {
+        for (Map.Entry<String, Integer> entry : this.players_info.entrySet()) {
             key = entry.getKey();
             value = entry.getValue();
             if(value > maxPlayedNumber){
@@ -76,7 +79,8 @@ public class GeneralData implements java.io.Serializable{
                 maxPlayername = key;
             }
         }
-        pair.put(maxPlayername, maxPlayedNumber);
+        pair.add(maxPlayername);
+        pair.add(maxPlayedNumber.toString());
         return pair;
     }
     }

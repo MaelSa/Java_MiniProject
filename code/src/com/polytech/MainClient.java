@@ -2,6 +2,7 @@ package com.polytech;
 
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequencer;
+import javax.sound.midi.Track;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -95,6 +96,15 @@ public class MainClient {
         InputStream is = new BufferedInputStream(new FileInputStream(new File("code/received.mid")));
         sequencer.setSequence(is);
         sequencer.start();
+        Scanner scanner = new Scanner(System.in);
+        float speedModifier;
+        String speedModifierString;
+        Settings settings = new Settings(sequencer);
+
+        while(sequencer.getTickPosition() < sequencer.getTickLength() - 10000){
+            settings.modifySpeed();
+        }
+
     }
 
     public static void main(String[] args) throws Exception{
@@ -103,7 +113,10 @@ public class MainClient {
         List<String> songListList = client.songStringToList(songListString);
         String choice = client.selectSong(songListString, songListList);
         client.receiveSongFile();
+        System.out.println("received");
         client.playSong();
+
+
 
 
 

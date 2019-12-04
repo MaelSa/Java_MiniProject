@@ -1,6 +1,7 @@
 package com.polytech;
 
 import javax.sound.midi.Sequencer;
+import javax.sound.midi.Track;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +16,13 @@ public class Settings {
     private ArrayList<String> validCommands;
     private boolean pause;
 
-    public Settings(){
+    public Settings(Sequencer sequencerp){
         slowFactor = 1;
         speedFactor = 1;
         speedModifier = 1;
         mute = false;
         pause = false;
+        sequencer = sequencerp;
         validCommands = new ArrayList<String>();
         validCommands.add("1");
         validCommands.add("2");
@@ -33,18 +35,32 @@ public class Settings {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter speed factor");
             String speedFactorString = scanner.nextLine();
-            this.speedModifier = Float.parseFloat(speedFactorString);
+            //this.speedModifier = Float.parseFloat(speedFactorString);
+            if(this.pause){
+                this.sequencer.start();
+                this.pause = false;
+            }
+            else{
+                this.sequencer.stop();
+                this.pause = true;
+            }
         }
         this.sequencer.setTempoFactor(this.speedModifier);
     }
 
     public void muteTrack() {
-        this.sequencer.setTrackMute(1, true);
+        Track track[] = this.sequencer.getSequence().getTracks();
+        for (int i = 0; i < track.length; i++){
+            this.sequencer.setTrackMute(i, true);
+        }
         this.mute = true;
     }
 
     public void unmuteTrack(){
-        this.sequencer.setTrackMute(1, false);
+        Track track[] = this.sequencer.getSequence().getTracks();
+        for (int i = 0; i < track.length; i++){
+            this.sequencer.setTrackMute(i, false);
+        }
         this.mute = false;
     }
 

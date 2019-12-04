@@ -45,7 +45,9 @@ public class MainServer {
         try {
             this.outputStream = client.getOutputStream();
             this.dataOutputStream = new DataOutputStream(outputStream);
-            this.dataOutputStream.writeUTF(this.availableSongsString);
+            String dataSong = "The most played song is " + this.generalData.getMostPlayedSong().get(0) + " it was played " + this.generalData.getMostPlayedSong().get(1) + " times";
+            String dataPlayer = "The most active player is " + this.generalData.getMostActivePlayer().get(0) + " they played " + this.generalData.getMostActivePlayer().get(1) + " times";
+            this.dataOutputStream.writeUTF(this.availableSongsString + dataSong + "\n" + dataPlayer);
             this.dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,15 +62,14 @@ public class MainServer {
     }
     public void loadGeneralData() throws Exception{
         FileInputStream fi = null;
-
-            fi = new FileInputStream(new File("generalData.txt"));
-            ObjectInputStream oi = new ObjectInputStream(fi);
-            this.generalData = (GeneralData) oi.readObject();
-            oi.close();
-            fi.close();
+        fi = new FileInputStream(new File("code/generalData.txt"));
+        ObjectInputStream oi = new ObjectInputStream(fi);
+        this.generalData = (GeneralData) oi.readObject();
+        oi.close();
+        fi.close();
     }
     public void storeGeneralData() throws Exception{
-        FileOutputStream f = new FileOutputStream(new File("generalData.txt"));
+        FileOutputStream f = new FileOutputStream(new File("code/generalData.txt"));
         ObjectOutputStream o = new ObjectOutputStream(f);
         o.writeObject(this.generalData);
         o.close();
@@ -96,10 +97,15 @@ public class MainServer {
     public static void main(String[] args) throws Exception{
 
         MainServer server = new MainServer();
+        //server.generalData = new GeneralData();
+        //server.storeGeneralData();
+        server.loadGeneralData();
         server.sendSongList();
         String choice = server.receiveSelectedSong();
+        server.generalData.update_song_player(choice, server.client_name);
+        server.storeGeneralData();
         server.sendChosenSong(choice);
-        //GeneralData generalData = new GeneralData();
+
 
     }
 
