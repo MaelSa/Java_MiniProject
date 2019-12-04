@@ -1,5 +1,7 @@
 package com.polytech;
 
+import javax.xml.crypto.Data;
+import javax.xml.stream.events.EntityReference;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -41,11 +43,20 @@ public class MainServer {
     }
     public void sendSongList(){
         try {
+            this.outputStream = client.getOutputStream();
+            this.dataOutputStream = new DataOutputStream(outputStream);
             this.dataOutputStream.writeUTF(this.availableSongsString);
             this.dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public String receiveSelectedSong() throws Exception {
+        String selectedSong;
+        this.inputStream = client.getInputStream();
+        this.dataInputStream = new DataInputStream(this.inputStream);
+        selectedSong = this.dataInputStream.readUTF();
+        return selectedSong;
     }
     public void loadGeneralData() throws Exception{
         FileInputStream fi = null;
@@ -65,7 +76,7 @@ public class MainServer {
     }
     public void sendChosenSong(String song) throws Exception{
         String songmid = song + ".mid";
-        File songsend = new File(songmid);
+        File songsend = new File("code/"+songmid);
         byte [] mybytearray  = new byte [(int)songsend.length()];
         this.fileInputStream = new FileInputStream(songsend);
         this.bufferedInputStream = new BufferedInputStream(fileInputStream);
@@ -77,10 +88,18 @@ public class MainServer {
         this.bufferedInputStream.close();
         this.outputStream.close();
     }
-    public static void main(String[] args) {
 
-        //MainServer server = new MainServer();
-        GeneralData generalData = new GeneralData();
+    public void selectSong() throws Exception{
+
+
+    }
+    public static void main(String[] args) throws Exception{
+
+        MainServer server = new MainServer();
+        server.sendSongList();
+        String choice = server.receiveSelectedSong();
+        server.sendChosenSong(choice);
+        //GeneralData generalData = new GeneralData();
 
     }
 

@@ -1,5 +1,7 @@
 package com.polytech;
 
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.Sequencer;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -29,8 +31,8 @@ public class MainClient {
             System.out.println("Username is: " + name);  // Output user input
             dataOutputStream.writeUTF(name);
             dataOutputStream.flush();
-            dataOutputStream.close();
-            outputStream.close();
+            //dataOutputStream.close();
+            //outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,7 +51,7 @@ public class MainClient {
         return list;
     }
 
-    public String selectSong(String songListString, List<String> songListList){
+    public String selectSong(String songListString, List<String> songListList) throws Exception{
         String choice = "";
         boolean end = false;
         Scanner scanner = new Scanner(System.in);
@@ -62,6 +64,10 @@ public class MainClient {
                 System.out.println("Not valid choice");
             }
         }
+        this.outputStream = socket.getOutputStream();
+        this.dataOutputStream = new DataOutputStream(outputStream);
+        this.dataOutputStream.writeUTF(choice);
+        this.dataOutputStream.flush();
         return choice;
     }
 
@@ -81,8 +87,25 @@ public class MainClient {
         this.bufferedOutputStream.write(mybyte,0, current);
         this.bufferedOutputStream.flush();
     }
+    public void playSong() throws Exception{
+        LyricsListener listener = new LyricsListener();
+        Sequencer sequencer = MidiSystem.getSequencer();
+        sequencer.addMetaEventListener(listener);
+        sequencer.open();
+        InputStream is = new BufferedInputStream(new FileInputStream(new File("code/Hotel.mid")));
+        sequencer.setSequence(is);
+        sequencer.start();
+    }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         MainClient client = new MainClient();
+        String songListString = client.receiveSongList();
+        List<String> songListList = client.songStringToList(songListString);
+        String choice = client.selectSong(songListString, songListList);
+        client.receiveSongFile();
+        client.playSong();
+
+
+
     }
 }

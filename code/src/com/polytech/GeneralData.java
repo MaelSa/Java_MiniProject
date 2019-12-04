@@ -17,10 +17,10 @@ public class GeneralData implements java.io.Serializable{
     }
 
     public void add_song(String songname){
-        int size = songname.length();
-        String clean_name = songname.substring(size - 5, size - 1);
-        this.songs_info.put(clean_name, 0);
-        System.out.println("Song" + clean_name + " added to song info");
+        //int size = songname.length();
+        //String clean_name = songname.substring(size - 5, size - 1);
+        this.songs_info.put(songname, 0);
+        //System.out.println("Song" + clean_name + " added to song info");
     }
 
     public void add_player(String player){
@@ -32,8 +32,14 @@ public class GeneralData implements java.io.Serializable{
         if (!this.players_info.containsKey(player)){
             add_player(player);
         }
+        else{
+            this.players_info.put(player,this.players_info.get(player) + 1);
+        }
         if (!this.songs_info.containsKey(song)){
             add_song(song);
+        }
+        else{
+            this.songs_info.put(song, this.songs_info.get(song) + 1);
         }
         //find a way to update both hashtables
     }
