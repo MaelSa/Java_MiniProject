@@ -2,6 +2,9 @@ package com.polytech;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class MainClient {
@@ -39,8 +42,27 @@ public class MainClient {
         return songList;
     }
 
-    public void selectSong(String songList){
+    public List<String> songStringToList(String songList){
+        List<String> list = new ArrayList<String>();
+        String str[] = songList.split("\n");
+        list = Arrays.asList(str);
+        return list;
+    }
 
+    public String selectSong(String songListString, List<String> songListList){
+        String choice = "";
+        boolean end = false;
+        Scanner scanner = new Scanner(System.in);
+        while(!end){
+            System.out.println(songListString);
+            System.out.println("Choose a song");
+            choice = scanner.nextLine();
+            end = songListList.contains(choice);
+            if(!end){
+                System.out.println("Not valid choice");
+            }
+        }
+        return choice;
     }
 
     public void receiveSongFile() throws Exception{
