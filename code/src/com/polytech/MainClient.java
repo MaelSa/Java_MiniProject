@@ -92,7 +92,7 @@ public class MainClient {
         Sequencer sequencer = MidiSystem.getSequencer();
         sequencer.addMetaEventListener(listener);
         sequencer.open();
-        InputStream is = new BufferedInputStream(new FileInputStream(new File("code/Hotel.mid")));
+        InputStream is = new BufferedInputStream(new FileInputStream(new File("code/received.mid")));
         sequencer.setSequence(is);
         sequencer.start();
     }
