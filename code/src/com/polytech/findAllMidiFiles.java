@@ -8,23 +8,26 @@ public class findAllMidiFiles {
     public static void main(String args[]){
         String result = "";
         String r2;
+        List<String> r3 = new ArrayList<String>();
         ArrayList<String> ree = new ArrayList<String>();
         ree = midiFilesArrayList(new File("code"), ree);
-        System.out.println(ree);
+        //System.out.println(ree);
         int j = 0;
         while(j < ree.size()){
             result += ree.get(j) + "\n";
             j ++;
         }
-        System.out.println(result);
-
+        //System.out.println(result);
+        String str[] = result.split("\n");
+        r3 = Arrays.asList(str);
+        System.out.println(r3);
         //List<String> al = new ArrayList<String>();
         //al = Arrays.asList(str);
         //System.out.println(al);
 
     }
 
-    public static String midiFilesString(File file){
+    public static String midiFilesString(){
         String resultString = "";
         ArrayList<String> resultList = new ArrayList<String>();
         resultList = midiFilesArrayList(new File("code"), resultList);

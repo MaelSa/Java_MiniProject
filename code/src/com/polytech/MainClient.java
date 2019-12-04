@@ -39,6 +39,10 @@ public class MainClient {
         return songList;
     }
 
+    public void selectSong(String songList){
+
+    }
+
     public void receiveSongFile() throws Exception{
         int bytesread;
         int current = 0;

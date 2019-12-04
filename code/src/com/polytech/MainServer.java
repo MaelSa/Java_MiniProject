@@ -37,7 +37,7 @@ public class MainServer {
             e.printStackTrace();
         }
         availableSongsList = findAllMidiFiles.midiFilesArrayList(new File("code"),new ArrayList<String>());
-        availableSongsString = findAllMidiFiles.midiFilesString(new File("code"), "");
+        availableSongsString = findAllMidiFiles.midiFilesString();
     }
     public void sendSongList(){
         try {
@@ -78,7 +78,10 @@ public class MainServer {
         this.outputStream.close();
     }
     public static void main(String[] args) {
-        MainServer server = new MainServer();
+
+        //MainServer server = new MainServer();
+        GeneralData generalData = new GeneralData();
+
     }
 
 }
