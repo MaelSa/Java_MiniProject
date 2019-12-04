@@ -11,29 +11,29 @@ public class findAllMidiFiles {
         ArrayList<String> ree = new ArrayList<String>();
         ree = midiFilesArrayList(new File("code"), ree);
         System.out.println(ree);
-        //String str[] = ree.split("\n");
-        List<String> al = new ArrayList<String>();
+        int j = 0;
+        while(j < ree.size()){
+            result += ree.get(j) + "\n";
+            j ++;
+        }
+        System.out.println(result);
+
+        //List<String> al = new ArrayList<String>();
         //al = Arrays.asList(str);
-        System.out.println(al);
+        //System.out.println(al);
 
     }
 
-    public static String midiFilesString(File file,String result){
-        if(file.isDirectory()){
-            File[] temp = file.listFiles();
-            if(temp!=null)
-                for(File f:temp)
-                    midiFilesString(f,result);
+    public static String midiFilesString(File file){
+        String resultString = "";
+        ArrayList<String> resultList = new ArrayList<String>();
+        resultList = midiFilesArrayList(new File("code"), resultList);
+        int j = 0;
+        while (j < resultList.size()) {
+            resultString += resultList.get(j) + "\n";
+            j ++;
         }
-        else if(file.isFile()){
-            if("mid".equals(file.getName().substring(file.getName().lastIndexOf(".")+1).toLowerCase())){
-                //System.out.println(file.getName().substring(0,file.getName().length()-4));
-                result += file.getName().substring(0,file.getName().length()-4);
-                result += "\n";
-                return result;
-            }
-        }
-        return result;
+        return resultString;
     }
 
     public static ArrayList<String> midiFilesArrayList(File file, ArrayList<String> result){
