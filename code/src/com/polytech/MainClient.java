@@ -96,14 +96,15 @@ public class MainClient {
         InputStream is = new BufferedInputStream(new FileInputStream(new File("code/received.mid")));
         sequencer.setSequence(is);
         sequencer.start();
-        Scanner scanner = new Scanner(System.in);
-        float speedModifier;
-        String speedModifierString;
-        Settings settings = new Settings(sequencer);
+        //Scanner scanner = new Scanner(System.in);
+        //float speedModifier;
+        //String speedModifierString;
+        //ettings settings = new Settings(sequencer);
 
-        while(sequencer.getTickPosition() < sequencer.getTickLength() - 10000){
-            settings.modifySpeed();
-        }
+        //while(sequencer.getTickPosition() < sequencer.getTickLength() - 10000){
+        //    settings.modifySpeed();
+        //}
+        SimpleJButton simpleJButton = new SimpleJButton(sequencer);
 
     }
 
