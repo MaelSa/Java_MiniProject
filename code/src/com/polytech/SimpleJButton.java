@@ -9,19 +9,29 @@ import java.awt.event.ActionListener;
 
 public class SimpleJButton {
 
-    SimpleJButton(Sequencer sequencer, Boolean pause){
+    SimpleJButton(Sequencer sequencer){
         JFrame f=new JFrame("JavaOke");
         JPanel jPanel = new JPanel();
         //submit button
         JButton buttonPause=new JButton("Pause");
-        JButton buttonResume = new JButton("Resume")
+        JButton buttonResume = new JButton("Resume");
         buttonPause.setBounds(100,200,140, 40);
         buttonResume.setBounds(100,300,140,10);
         buttonPause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 sequencer.stop();
+                buttonResume.setEnabled(true);
+                buttonPause.setEnabled(false);
 
+            }
+        });
+        buttonResume.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                sequencer.start();
+                buttonResume.setEnabled(false);
+                buttonPause.setEnabled(true);
             }
         });
         JSlider slider = new JSlider(0, 100, 10);
@@ -40,6 +50,8 @@ public class SimpleJButton {
         jPanel.add(slider);
 
         f.add(buttonPause);
+        f.add(buttonResume);
+        buttonResume.setEnabled(false);
         f.add(jPanel);
         f.setSize(500,500);
         //f.show();

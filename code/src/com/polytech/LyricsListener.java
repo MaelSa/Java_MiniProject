@@ -30,7 +30,7 @@ public class LyricsListener implements MetaEventListener {
     public static void main(String[] args) {
         InputStream is = null;
         try {
-            is = new BufferedInputStream(new FileInputStream(new File("D:\\JavaMiniProjectMaster\\Java_MiniProject-master\\Java_MiniProject-master\\code\\Barbiegirl.mid")));
+            is = new BufferedInputStream(new FileInputStream(new File("code/fBarbiegirl.mid")));
             LyricsListener listener = new LyricsListener();
             Sequencer sequencer = MidiSystem.getSequencer();
             sequencer.addMetaEventListener(listener);
