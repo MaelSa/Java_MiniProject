@@ -4,6 +4,7 @@ import javax.sound.midi.Sequencer;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,9 +16,9 @@ public class GraphicDuringSong {
         //submit button
         JButton buttonPause=new JButton("Pause");
         JButton buttonResume = new JButton("Resume");
-        buttonPause.setBounds(100,200,140, 40);
-        buttonResume.setBounds(100,300,140,40);
-        labelLyrics.setBounds(100,400,350,60);
+        //buttonPause.setBounds(100,200,140, 40);
+        //buttonResume.setBounds(100,300,140,40);
+        //labelLyrics.setBounds(100,400,350,60);
         buttonPause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -50,12 +51,12 @@ public class GraphicDuringSong {
         slider.setMinorTickSpacing(1);
         jPanel.add(slider);
 
-        f.add(buttonPause);
-        f.add(buttonResume);
-        f.add(labelLyrics);
+        f.add(buttonPause, BorderLayout.EAST);
+        f.add(buttonResume, BorderLayout.WEST);
+        f.add(labelLyrics, BorderLayout.CENTER);
         buttonResume.setEnabled(false);
-        f.add(jPanel);
-        f.setSize(500,500);
+        f.add(jPanel, BorderLayout.NORTH);
+        f.setSize(500,150);
         //f.show();
         //f.setLayout(null);
         f.setVisible(true);

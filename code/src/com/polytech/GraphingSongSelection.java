@@ -1,6 +1,7 @@
 package com.polytech;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataOutputStream;
@@ -12,7 +13,7 @@ public class GraphingSongSelection {
         JFrame frame = new JFrame("Javaoke");
         JPanel jPanel = new JPanel();
         JButton submitButton = new JButton("Submit");
-        submitButton.setBounds(100,200,140,40);
+        //submitButton.setBounds(100,200,140,40);
         JComboBox<String> songs = new JComboBox<String>(songList);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -38,9 +39,9 @@ public class GraphingSongSelection {
         //frame.add(songs);
         //frame.add(jPanel);
 
-        frame.add(submitButton);
-        frame.add(jPanel);
-        frame.setSize(500,500);
+        frame.add(submitButton, BorderLayout.SOUTH);
+        frame.add(jPanel, BorderLayout.NORTH);
+        frame.setSize(400,100);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

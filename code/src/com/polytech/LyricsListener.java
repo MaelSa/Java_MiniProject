@@ -25,7 +25,7 @@ public class LyricsListener implements MetaEventListener {
                 System.out.print(string);
                 //buffer += string;
                 this.jLabel.setText(buffer);
-                if(buffer.length() > 40) {
+                if(buffer.length() > 50) {
 
                     buffer = string;
                 }
