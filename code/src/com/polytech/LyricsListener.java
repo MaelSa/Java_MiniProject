@@ -9,10 +9,12 @@ import java.util.Arrays;
 
 public class LyricsListener implements MetaEventListener {
     static Object data;
+    static String buffer;
     public JLabel jLabel;
     public LyricsListener(JLabel label){
         super();
         jLabel = label;
+        buffer = "";
     }
     @Override
     public void meta(MetaMessage metaMessage) {
@@ -21,7 +23,15 @@ public class LyricsListener implements MetaEventListener {
             String string = new String(metaMessage.getData());
             if(!string.equals(data)){
                 System.out.print(string);
-                this.jLabel.setText(string);
+                //buffer += string;
+                this.jLabel.setText(buffer);
+                if(buffer.length() > 40) {
+
+                    buffer = string;
+                }
+                else{
+                    buffer += string;
+                }
                 data = string;
             }
         }

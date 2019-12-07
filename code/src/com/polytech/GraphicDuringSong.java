@@ -17,7 +17,7 @@ public class GraphicDuringSong {
         JButton buttonResume = new JButton("Resume");
         buttonPause.setBounds(100,200,140, 40);
         buttonResume.setBounds(100,300,140,40);
-        labelLyrics.setBounds(100,400,140,40);
+        labelLyrics.setBounds(100,400,350,60);
         buttonPause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
