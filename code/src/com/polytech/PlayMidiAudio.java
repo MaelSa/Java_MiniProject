@@ -8,11 +8,13 @@ import java.util.Scanner;
 
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequencer;
+import javax.swing.*;
 
 public class PlayMidiAudio {
 
     public static void main(String[] args) throws Exception {
-        LyricsListener listener = new LyricsListener();
+        JLabel label = new JLabel();
+        LyricsListener listener = new LyricsListener(label);
         // Obtains the default Sequencer connected to a default device.
         Sequencer sequencer = MidiSystem.getSequencer();
         sequencer.addMetaEventListener(listener);

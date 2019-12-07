@@ -7,16 +7,17 @@ import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SimpleJButton {
+public class GraphicDuringSong {
 
-    SimpleJButton(Sequencer sequencer){
+    GraphicDuringSong(Sequencer sequencer, JLabel labelLyrics){
         JFrame f=new JFrame("JavaOke");
         JPanel jPanel = new JPanel();
         //submit button
         JButton buttonPause=new JButton("Pause");
         JButton buttonResume = new JButton("Resume");
         buttonPause.setBounds(100,200,140, 40);
-        buttonResume.setBounds(100,300,140,10);
+        buttonResume.setBounds(100,300,140,40);
+        labelLyrics.setBounds(100,400,140,40);
         buttonPause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -51,6 +52,7 @@ public class SimpleJButton {
 
         f.add(buttonPause);
         f.add(buttonResume);
+        f.add(labelLyrics);
         buttonResume.setEnabled(false);
         f.add(jPanel);
         f.setSize(500,500);

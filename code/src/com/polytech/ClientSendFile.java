@@ -32,9 +32,9 @@ public class ClientSendFile {
         bos.flush();
         System.out.println("done");
         InputStream is = new BufferedInputStream(new FileInputStream(new File("code/received.mid")));
-        LyricsListener listener = new LyricsListener();
+        //LyricsListener listener = new LyricsListener();
         Sequencer sequencer = MidiSystem.getSequencer();
-        sequencer.addMetaEventListener(listener);
+        //sequencer.addMetaEventListener(listener);
         sequencer.open();
         sequencer.setSequence(is);
         sequencer.start();

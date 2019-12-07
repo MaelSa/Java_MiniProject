@@ -3,6 +3,7 @@ package com.polytech;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequencer;
 import javax.sound.midi.Track;
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -11,10 +12,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MainClient {
-    private Socket socket;
+    Socket socket;
     private String name;
-    private OutputStream outputStream;
-    private DataOutputStream dataOutputStream;
+    OutputStream outputStream;
+    DataOutputStream dataOutputStream;
     private InputStream inputStream;
     private DataInputStream dataInputStream;
     private FileOutputStream fileOutputStream;
@@ -24,14 +25,14 @@ public class MainClient {
             System.out.println("Attempting to reach server");
             socket = new Socket("127.0.0.1", 5000);
             System.out.println("Connected");
-            outputStream = socket.getOutputStream();
-            dataOutputStream = new DataOutputStream(outputStream);
-            Scanner scanner = new Scanner(System.in);  // Create a Scanner object
-            System.out.println("Enter username");
-            name = scanner.nextLine();  // Read user input
-            System.out.println("Username is: " + name);  // Output user input
-            dataOutputStream.writeUTF(name);
-            dataOutputStream.flush();
+            //outputStream = socket.getOutputStream();
+            // dataOutputStream = new DataOutputStream(outputStream);
+            // Scanner scanner = new Scanner(System.in);  // Create a Scanner object
+            // System.out.println("Enter username");
+            // name = scanner.nextLine();  // Read user input
+            // System.out.println("Username is: " + name);  // Output user input
+            // dataOutputStream.writeUTF(name);
+            // dataOutputStream.flush();
             //dataOutputStream.close();
             //outputStream.close();
         } catch (IOException e) {
@@ -89,7 +90,8 @@ public class MainClient {
         this.bufferedOutputStream.flush();
     }
     public void playSong() throws Exception{
-        LyricsListener listener = new LyricsListener();
+        JLabel label = new JLabel();
+        LyricsListener listener = new LyricsListener(label);
         Sequencer sequencer = MidiSystem.getSequencer();
         sequencer.addMetaEventListener(listener);
         sequencer.open();
@@ -104,15 +106,18 @@ public class MainClient {
         //while(sequencer.getTickPosition() < sequencer.getTickLength() - 10000){
         //    settings.modifySpeed();
         //}
-        SimpleJButton simpleJButton = new SimpleJButton(sequencer);
+        GraphicDuringSong simpleJButton = new GraphicDuringSong(sequencer, label);
 
     }
 
     public static void main(String[] args) throws Exception{
         MainClient client = new MainClient();
+        GraphicName graphicName = new GraphicName(client);
         String songListString = client.receiveSongList();
         List<String> songListList = client.songStringToList(songListString);
-        String choice = client.selectSong(songListString, songListList);
+        String[] strarray = songListList.toArray(new String[0]);
+        GraphingSongSelection graphingSongSelection = new GraphingSongSelection(strarray, client);
+        //String choice = client.selectSong(songListString, songListList);
         client.receiveSongFile();
         System.out.println("received");
         client.playSong();
