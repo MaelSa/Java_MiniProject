@@ -18,7 +18,9 @@ public class GraphicDuringSong {
      * @param sequencer
      * @param labelLyrics
      */
-    GraphicDuringSong(Sequencer sequencer, JLabel labelLyrics){
+    public Sequencer sequencer;
+    GraphicDuringSong(Sequencer seequencer, JLabel labelLyrics){
+        this.sequencer = seequencer;
         JFrame frame=new JFrame("JavaOke");
         frame.setLayout(new FlowLayout());
         JPanel jPanel = new JPanel();
@@ -60,6 +62,15 @@ public class GraphicDuringSong {
                 sequencer.setTempoFactor(value/100);
             }
         });
+        JSlider slider1 = new JSlider(0,10,1);
+        slider1.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                sequencer.stop();
+                changePitch(slider1.getValue());
+                sequencer.start();
+            }
+        });
         buttonMute.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -86,9 +97,15 @@ public class GraphicDuringSong {
         slider.setPaintTrack(true);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
+        slider1.setPaintTrack(true);
+        slider1.setPaintTicks(true);
+        slider1.setPaintLabels(true);
+        slider1.setMajorTickSpacing(5);
+        slider1.setMinorTickSpacing(1);
         slider.setMajorTickSpacing(200);
         slider.setMinorTickSpacing(100);
         jPanel.add(slider);
+        jPanel.add(slider1);
         frame.add(jPanel, BorderLayout.NORTH);
 
         frame.add(buttonPause);
@@ -113,5 +130,9 @@ public class GraphicDuringSong {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
+    public void changePitch(int i){
+        long currentTicks = this.sequencer.getTickPosition();
+        this.sequencer = PitchControl.changePitch("code/received.mid", i);
+        this.sequencer.setTickPosition(currentTicks);
+    }
 }
