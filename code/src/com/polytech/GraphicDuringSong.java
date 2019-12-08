@@ -1,6 +1,7 @@
 package com.polytech;
 
 import javax.sound.midi.Sequencer;
+import javax.sound.midi.Track;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -18,10 +19,13 @@ public class GraphicDuringSong {
      * @param labelLyrics
      */
     GraphicDuringSong(Sequencer sequencer, JLabel labelLyrics){
-        JFrame f=new JFrame("JavaOke");
+        JFrame frame=new JFrame("JavaOke");
+        frame.setLayout(new FlowLayout());
         JPanel jPanel = new JPanel();
         JButton buttonPause=new JButton("Pause");
         JButton buttonResume = new JButton("Resume");
+        JButton buttonMute = new JButton("Mute");
+        JButton buttonUnmute = new JButton("Unmute");
         buttonPause.addActionListener(new ActionListener() {
             @Override
             /**
@@ -45,7 +49,7 @@ public class GraphicDuringSong {
                 buttonPause.setEnabled(true);
             }
         });
-        JSlider slider = new JSlider(0, 100, 10);
+        JSlider slider = new JSlider(0, 1000, 100);
         slider.addChangeListener(new ChangeListener() {
             @Override
             /**
@@ -53,34 +57,61 @@ public class GraphicDuringSong {
              */
             public void stateChanged(ChangeEvent changeEvent) {
                 float value = (float) slider.getValue();
-                sequencer.setTempoFactor(value/10);
+                sequencer.setTempoFactor(value/100);
+            }
+        });
+        buttonMute.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                buttonMute.setEnabled(false);
+                buttonUnmute.setEnabled(true);
+                Track track[] = sequencer.getSequence().getTracks();
+                for (int i = 0; i < track.length; i++){
+                        sequencer.setTrackMute(i, true);
+                }
+            }
+        });
+
+        buttonUnmute.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                buttonMute.setEnabled(true);
+                buttonUnmute.setEnabled(false);
+                Track track[] = sequencer.getSequence().getTracks();
+                for (int i = 0; i < track.length; i++){
+                    sequencer.setTrackMute(i, false);
+                }
             }
         });
         slider.setPaintTrack(true);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
-        slider.setMajorTickSpacing(10);
-        slider.setMinorTickSpacing(1);
+        slider.setMajorTickSpacing(200);
+        slider.setMinorTickSpacing(100);
         jPanel.add(slider);
+        frame.add(jPanel, BorderLayout.NORTH);
 
-        f.add(buttonPause, BorderLayout.EAST);
-        f.add(buttonResume, BorderLayout.WEST);
-        f.add(labelLyrics, BorderLayout.CENTER);
+        frame.add(buttonPause);
+        frame.add(buttonResume);
         buttonResume.setEnabled(false);
-        f.add(jPanel, BorderLayout.NORTH);
-        f.setSize(500,150);
+        buttonUnmute.setEnabled(false);
+        frame.add(buttonMute, BorderLayout.EAST);
+        frame.add(buttonUnmute, BorderLayout.WEST);
+        frame.add(labelLyrics, BorderLayout.SOUTH);
+
+        frame.setSize(550,300);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension windowSize = f.getSize();
+        Dimension windowSize = frame.getSize();
 
 
         int windowX = Math.max(0, (screenSize.width  - windowSize.width ) / 2);
         int windowY = Math.max(0, (screenSize.height - windowSize.height) / 2);
 
-        f.setLocation(windowX, windowY);
+        frame.setLocation(windowX, windowY);
 
-        f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 }
