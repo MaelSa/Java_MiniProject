@@ -15,28 +15,28 @@ please enjoy it.
 
 #### Different components(class) of the project:
 
-- GUIs:
+- `GUIs`:
 
-- PitchControl:
+- `PitchControl`:
 This class is used to modify the pitch of the chosen music before/during playing.
 
-- findAllMidiFiles:
+- `findAllMidiFiles`:
 This class is mainly used to identify all midi-type files in specified directory and 
 return the result in required format.
 
-- LyricsListener:
+- `LyricsListener`:
 This class focus on reading the integrated lyrics message inside the midi file during playing
  in order to show the lyrics at corresponding time.
  
-- GeneralData:
+- `GeneralData`:
 This is a class specifically used to store information of all users and calculate 
 different kinds of global characteristics of this system.
 
-- MainServer:
+- `MainServer`:
 This is the server-side program that should be run at the very first place, which coordinates all the global information
  needed and serve to send the required music and collect user information.
 
-- MainClient:
+- `MainClient`:
 Of course this is the client-side program which should be run after launching the server
 side program. It has multiple functionality including changing speed/pitch of the 
 playing music. Users are able to adjust some features of the music by drawing the 
