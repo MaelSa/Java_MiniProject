@@ -50,7 +50,7 @@ public class MainClient {
         List<String> list = new ArrayList<String>();
         String str[] = songList.split("\n");
         list = Arrays.asList(str);
-        System.out.println(list.get(list.size() -1));
+        System.out.println(list.get(list.size() -1  ));
         return list;
     }
 
