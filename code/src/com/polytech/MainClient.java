@@ -50,20 +50,25 @@ public class MainClient {
     /**
      * Receives the string containing the name of all the songs available on the server,
      * but also the data for the most played song and most active player
-     * @return
-     * @throws IOException
+     * @return String songList
      */
-    public String receiveSongList() throws IOException {
-        this.inputStream = socket.getInputStream();
-        this.dataInputStream = new DataInputStream(this.inputStream);
-        String songList = this.dataInputStream.readUTF();
-        return songList;
+    public String receiveSongList() {
+        try{
+            this.inputStream = socket.getInputStream();
+            this.dataInputStream = new DataInputStream(this.inputStream);
+            String songList = this.dataInputStream.readUTF();
+            return songList;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     /**
      * Transforms the string containing the songs into a list
      * @param songList
-     * @return
+     * @return List<String> list
      */
     public List<String> songStringToList(String songList){
         List<String> list = new ArrayList<String>();
@@ -73,66 +78,78 @@ public class MainClient {
     }
 
 
-    public String selectSong(String songListString, List<String> songListList) throws Exception{
-        String choice = "";
-        boolean end = false;
-        Scanner scanner = new Scanner(System.in);
-        while(!end){
-            System.out.println(songListString);
-            System.out.println("Choose a song");
-            choice = scanner.nextLine();
-            end = songListList.contains(choice);
-            if(!end){
-                System.out.println("Not valid choice");
+    public String selectSong(String songListString, List<String> songListList) {
+        try{
+            String choice = "";
+            boolean end = false;
+            Scanner scanner = new Scanner(System.in);
+            while(!end){
+                System.out.println(songListString);
+                System.out.println("Choose a song");
+                choice = scanner.nextLine();
+                end = songListList.contains(choice);
+                if(!end){
+                    System.out.println("Not valid choice");
+                }
             }
+            this.outputStream = socket.getOutputStream();
+            this.dataOutputStream = new DataOutputStream(outputStream);
+            this.dataOutputStream.writeUTF(choice);
+            this.dataOutputStream.flush();
+            return choice;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-        this.outputStream = socket.getOutputStream();
-        this.dataOutputStream = new DataOutputStream(outputStream);
-        this.dataOutputStream.writeUTF(choice);
-        this.dataOutputStream.flush();
-        return choice;
+
     }
 
     /**
      * Receive the midi file containing the song from the server
-     * @throws Exception
      */
-    public void receiveSongFile() throws Exception{
-        int bytesread;
-        int current = 0;
-        byte [] mybyte = new byte[602238600];
-        this.inputStream = socket.getInputStream();
-        this.fileOutputStream = new FileOutputStream("code/received.mid");
-        this.bufferedOutputStream = new BufferedOutputStream(this.fileOutputStream);
-        bytesread = inputStream.read(mybyte, 0, mybyte.length);
-        current = bytesread;
-        do{
-            bytesread = inputStream.read(mybyte, current, (mybyte.length - current));
-            if(bytesread >= 0) current += bytesread;
-        } while(bytesread > -1);
-        this.bufferedOutputStream.write(mybyte,0, current);
-        this.bufferedOutputStream.flush();
+    public void receiveSongFile(){
+        try{
+            int bytesread;
+            int current = 0;
+            byte [] mybyte = new byte[602238600];
+            this.inputStream = socket.getInputStream();
+            this.fileOutputStream = new FileOutputStream("code/received.mid");
+            this.bufferedOutputStream = new BufferedOutputStream(this.fileOutputStream);
+            bytesread = inputStream.read(mybyte, 0, mybyte.length);
+            current = bytesread;
+            do{
+                bytesread = inputStream.read(mybyte, current, (mybyte.length - current));
+                if(bytesread >= 0) current += bytesread;
+            } while(bytesread > -1);
+            this.bufferedOutputStream.write(mybyte,0, current);
+            this.bufferedOutputStream.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     /**
      * Plays the last received song
-     * @throws Exception
      */
-    public void playSong() throws Exception{
-        JLabel label = new JLabel();
-        LyricsListener listener = new LyricsListener(label);
-        Sequencer sequencer = MidiSystem.getSequencer();
-        sequencer.addMetaEventListener(listener);
-        sequencer.open();
-        InputStream is = new BufferedInputStream(new FileInputStream(new File("code/received.mid")));
-        sequencer.setSequence(is);
-        sequencer.start();
+    public void playSong(){
+        try{
+            JLabel label = new JLabel();
+            LyricsListener listener = new LyricsListener(label);
+            Sequencer sequencer = MidiSystem.getSequencer();
+            sequencer.addMetaEventListener(listener);
+            sequencer.open();
+            InputStream is = new BufferedInputStream(new FileInputStream(new File("code/received.mid")));
+            sequencer.setSequence(is);
+            sequencer.start();
 
-        GraphicDuringSong simpleJButton = new GraphicDuringSong(sequencer, label);
-
+            GraphicDuringSong simpleJButton = new GraphicDuringSong(sequencer, label);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) {
         MainClient client = new MainClient();
         GraphicName graphicName = new GraphicName(client);
         String songListString = client.receiveSongList();
@@ -142,10 +159,5 @@ public class MainClient {
         client.receiveSongFile();
         System.out.println("received");
         client.playSong();
-
-
-
-
-
     }
 }
