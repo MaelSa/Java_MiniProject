@@ -149,8 +149,7 @@ public class MainServer {
     public static void main(String[] args) {
 
         MainServer server = new MainServer();
-        //server.generalData = new GeneralData();
-        //server.storeGeneralData();
+
         server.loadGeneralData();
         server.sendSongList();
         String choice = server.receiveSelectedSong();

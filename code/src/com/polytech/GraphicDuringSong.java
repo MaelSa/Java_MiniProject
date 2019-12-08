@@ -15,14 +15,14 @@ import java.awt.event.ActionListener;
 public class GraphicDuringSong {
     /**
      * Creates a song player graphic interface.
-     * @param sequencer
-     * @param labelLyrics
+     * @param sequencer the sequencer used to playe the song
+     * @param labelLyrics the label in which the lyrics are displayed
      */
     public Sequencer sequencer;
     GraphicDuringSong(Sequencer seequencer, JLabel labelLyrics){
         this.sequencer = seequencer;
         JFrame frame=new JFrame("JavaOke");
-        frame.setLayout(new FlowLayout());
+        frame.setLayout(new BorderLayout());
         JPanel jPanel = new JPanel();
         JLabel labelSlider = new JLabel("Speed");
         JLabel labelSlider1 = new JLabel("Pitch");
@@ -80,7 +80,7 @@ public class GraphicDuringSong {
                 buttonUnmute.setEnabled(true);
                 Track track[] = sequencer.getSequence().getTracks();
                 for (int i = 0; i < track.length; i++){
-                        sequencer.setTrackMute(i, true);
+                    sequencer.setTrackMute(i, true);
                 }
             }
         });
@@ -96,6 +96,7 @@ public class GraphicDuringSong {
                 }
             }
         });
+        //Placing all the componants in the interface
         slider.setPaintTrack(true);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
@@ -106,21 +107,27 @@ public class GraphicDuringSong {
         slider1.setMinorTickSpacing(1);
         slider.setMajorTickSpacing(200);
         slider.setMinorTickSpacing(100);
+        JPanel jPanel1 = new JPanel();
+        jPanel1.add(buttonPause);
+        jPanel1.add(buttonResume);
+        jPanel1.add(buttonMute);
+        jPanel1.add(buttonUnmute);
         jPanel.add(slider);
         jPanel.add(labelSlider);
         jPanel.add(slider1);
         jPanel.add(labelSlider1);
         frame.add(jPanel, BorderLayout.NORTH);
-
-        frame.add(buttonPause);
-        frame.add(buttonResume);
+        frame.add(jPanel1, BorderLayout.CENTER);
+        //frame.add(buttonPause);
+        //frame.add(buttonResume);
         buttonResume.setEnabled(false);
         buttonUnmute.setEnabled(false);
-        frame.add(buttonMute, BorderLayout.EAST);
-        frame.add(buttonUnmute, BorderLayout.WEST);
+        //frame.add(buttonMute, BorderLayout.EAST);
+        //frame.add(buttonUnmute, BorderLayout.WEST);
+
         frame.add(labelLyrics, BorderLayout.SOUTH);
 
-        frame.setSize(550,300);
+        frame.setSize(500,150);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension windowSize = frame.getSize();
@@ -136,7 +143,7 @@ public class GraphicDuringSong {
     }
     public void changePitch(int i){
         long currentTicks = this.sequencer.getTickPosition();
-        this.sequencer = PitchControl.changePitch("code/received.mid", i);
+        this.sequencer = PitchControl.changePitch("received.mid", i);
         this.sequencer.setTickPosition(currentTicks);
     }
 }

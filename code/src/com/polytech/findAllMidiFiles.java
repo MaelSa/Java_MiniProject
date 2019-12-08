@@ -8,27 +8,7 @@ import java.util.List;
  * Class to find the midi files in the "code" folder
  */
 public class findAllMidiFiles {
-    public static void main(String args[]){
-        String result = "";
-        String r2;
-        List<String> r3 = new ArrayList<String>();
-        ArrayList<String> ree = new ArrayList<String>();
-        ree = midiFilesArrayList(new File("code"), ree);
-        //System.out.println(ree);
-        int j = 0;
-        while(j < ree.size()){
-            result += ree.get(j) + "\n";
-            j ++;
-        }
-        //System.out.println(result);
-        String str[] = result.split("\n");
-        r3 = Arrays.asList(str);
-        System.out.println(r3);
-        //List<String> al = new ArrayList<String>();
-        //al = Arrays.asList(str);
-        //System.out.println(al);
 
-    }
 
     /**
      * Returns a string containing the name of all the midi files in the "code" folder
@@ -48,9 +28,9 @@ public class findAllMidiFiles {
 
     /**
      * Returns an array with the name of all the midi files in th "code" folder
-     * @param file
-     * @param result
-     * @return
+     * @param file the folder
+     * @param result lists of midi files names
+     * @return list of midi files names
      */
     public static ArrayList<String> midiFilesArrayList(File file, ArrayList<String> result){
         if(file.isDirectory()){
@@ -61,7 +41,6 @@ public class findAllMidiFiles {
         }
         else if(file.isFile()){
             if("mid".equals(file.getName().substring(file.getName().lastIndexOf(".")+1).toLowerCase())){
-                //System.out.println(file.getName().substring(0,file.getName().length()-4));
                 result.add(file.getName().substring(0,file.getName().length()-4));
                 return result;
             }

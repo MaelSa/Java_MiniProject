@@ -25,18 +25,15 @@ public class GeneralData implements java.io.Serializable{
 
     /**
      * Adds the songname to the datas, with a number of played time equals to 1
-     * @param songname
+     * @param songname name of the added song
      */
     public void add_song(String songname){
-        //int size = songname.length();
-        //String clean_name = songname.substring(size - 5, size - 1);
         this.songs_info.put(songname, 1);
-        //System.out.println("Song" + clean_name + " added to song info");
     }
 
     /**
      * Adds the players name to the data, with a number of played songs equals to 1
-     * @param player
+     * @param player name of the added player
      */
     public void add_player(String player){
 
@@ -64,7 +61,6 @@ public class GeneralData implements java.io.Serializable{
         else{
             this.songs_info.put(song, this.songs_info.get(song) + 1);
         }
-        //find a way to update both hashtables
     }
 
     /**

@@ -20,18 +20,19 @@ public class GraphingSongSelection {
      * @param client: the client
      */
     public GraphingSongSelection(String[] songList, MainClient client){
-        System.out.println(songList[1]);
+
         JFrame frame = new JFrame("Javaoke");
         JPanel jPanel = new JPanel();
         JButton submitButton = new JButton("Submit");
         JLabel labelMostPlayedSong = new JLabel();
         JLabel labelMostActivePlayer = new JLabel();
-        //submitButton.setBounds(100,200,140,40);
         labelMostActivePlayer.setText(songList[songList.length-1]);
         labelMostPlayedSong.setText(songList[songList.length-2]);
         ArrayList<String> L = new ArrayList<String>(Arrays.asList(songList));
+
         L.remove(L.size()-1);
         L.remove(L.size()-2);
+
         String[] stringsComboBox = L.toArray(new String[0]);
         JComboBox<String> songs = new JComboBox<String>(stringsComboBox);
         submitButton.addActionListener(new ActionListener() {
@@ -55,11 +56,8 @@ public class GraphingSongSelection {
                 frame.dispose();
             }
         });
-        //songs.setBounds(300, 300, 100, 50);
         songs.setSelectedIndex(0);
         jPanel.add(songs);
-        //frame.add(songs);
-        //frame.add(jPanel);
 
         frame.add(submitButton, BorderLayout.EAST);
         frame.add(jPanel, BorderLayout.NORTH);

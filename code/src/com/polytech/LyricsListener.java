@@ -29,7 +29,6 @@ public class LyricsListener implements MetaEventListener {
             String string = new String(metaMessage.getData());
             if(!string.equals(data)){
                 System.out.print(string);
-                //buffer += string;
                 this.jLabel.setText(buffer);
                 if(buffer.length() > 50) {
 
@@ -51,19 +50,5 @@ public class LyricsListener implements MetaEventListener {
         }
     }
 
-    public static void main(String[] args) {
-        InputStream is = null;
-        try {
-            is = new BufferedInputStream(new FileInputStream(new File("code/fBarbiegirl.mid")));
-            JLabel label = new JLabel();
-            LyricsListener listener = new LyricsListener(label);
-            Sequencer sequencer = MidiSystem.getSequencer();
-            sequencer.addMetaEventListener(listener);
-            sequencer.open();
-            sequencer.setSequence(is);
-            sequencer.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }
