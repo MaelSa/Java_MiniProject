@@ -74,65 +74,79 @@ public class MainServer {
     /**
      * Receive the selected song's name
      * @return String, the song selected by the client
-     * @throws Exception
      */
-    public String receiveSelectedSong() throws Exception {
-        String selectedSong;
-        this.inputStream = client.getInputStream();
-        this.dataInputStream = new DataInputStream(this.inputStream);
-        selectedSong = this.dataInputStream.readUTF();
-        return selectedSong;
+    public String receiveSelectedSong() {
+        try{
+            String selectedSong;
+            this.inputStream = client.getInputStream();
+            this.dataInputStream = new DataInputStream(this.inputStream);
+            selectedSong = this.dataInputStream.readUTF();
+            return selectedSong;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
      * Deserialazes the GeneralData object
      * containing the most played song and most active player data
-     * @throws Exception
      */
-    public void loadGeneralData() throws Exception{
-        FileInputStream fi = null;
-        fi = new FileInputStream(new File("code/generalData.txt"));
-        ObjectInputStream oi = new ObjectInputStream(fi);
-        this.generalData = (GeneralData) oi.readObject();
-        oi.close();
-        fi.close();
+    public void loadGeneralData() {
+        try {
+            FileInputStream fi = null;
+            fi = new FileInputStream(new File("code/generalData.txt"));
+            ObjectInputStream oi = new ObjectInputStream(fi);
+            this.generalData = (GeneralData) oi.readObject();
+            oi.close();
+            fi.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
      * Serializes the GeneralData object
-     * @throws Exception
      */
-    public void storeGeneralData() throws Exception{
-        FileOutputStream f = new FileOutputStream(new File("code/generalData.txt"));
-        ObjectOutputStream o = new ObjectOutputStream(f);
-        o.writeObject(this.generalData);
-        o.close();
-        f.close();
+    public void storeGeneralData(){
+        try{
+            FileOutputStream f = new FileOutputStream(new File("code/generalData.txt"));
+            ObjectOutputStream o = new ObjectOutputStream(f);
+            o.writeObject(this.generalData);
+            o.close();
+            f.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
      * takes the song's name chosen by the client, and sends them the corresponding
      * midi file via the client socket
      * @param song
-     * @throws Exception
      */
-    public void sendChosenSong(String song) throws Exception{
-        String songmid = song + ".mid";
-        File songsend = new File("code/"+songmid);
-        byte [] mybytearray  = new byte [(int)songsend.length()];
-        this.fileInputStream = new FileInputStream(songsend);
-        this.bufferedInputStream = new BufferedInputStream(fileInputStream);
-        this.bufferedInputStream.read(mybytearray, 0, mybytearray.length);
-        this.outputStream = this.client.getOutputStream();
-        this.outputStream.write(mybytearray, 0, mybytearray.length);
-        this.outputStream.flush();
-        System.out.println("Song sent");
-        this.bufferedInputStream.close();
-        this.outputStream.close();
+    public void sendChosenSong(String song) {
+        try{
+            String songmid = song + ".mid";
+            File songsend = new File("code/"+songmid);
+            byte [] mybytearray  = new byte [(int)songsend.length()];
+            this.fileInputStream = new FileInputStream(songsend);
+            this.bufferedInputStream = new BufferedInputStream(fileInputStream);
+            this.bufferedInputStream.read(mybytearray, 0, mybytearray.length);
+            this.outputStream = this.client.getOutputStream();
+            this.outputStream.write(mybytearray, 0, mybytearray.length);
+            this.outputStream.flush();
+            System.out.println("Song sent");
+            this.bufferedInputStream.close();
+            this.outputStream.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) {
 
         MainServer server = new MainServer();
         //server.generalData = new GeneralData();
@@ -143,8 +157,5 @@ public class MainServer {
         server.generalData.update_song_player(choice, server.client_name);
         server.storeGeneralData();
         server.sendChosenSong(choice);
-
-
     }
-
 }
