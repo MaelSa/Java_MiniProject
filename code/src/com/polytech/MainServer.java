@@ -8,6 +8,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The MainServer class in the main class for the server side of JavaOke project
+ * @author Maël Salazard and Yulin Xie
+ */
 public class MainServer {
     private ServerSocket servsock;
     private Socket client;
@@ -23,6 +27,13 @@ public class MainServer {
     private FileOutputStream fileOutputStream;
     private ArrayList<String> availableSongsList;
     private String availableSongsString;
+    /**
+     *The MainServer constructor, does not take parameters.
+     * It initializes the socket connection
+     * with the client, and receives its name and creates songsList,
+     * with all the midi files
+     * in the "code" folder
+     */
     MainServer(){
         try {
             servsock = new ServerSocket(5000);
@@ -41,6 +52,12 @@ public class MainServer {
         availableSongsList = findAllMidiFiles.midiFilesArrayList(new File("code"),new ArrayList<String>());
         availableSongsString = findAllMidiFiles.midiFilesString();
     }
+
+    /**
+     * Sends a string to the client socket. This string contains the name of all
+     * the midi files available
+     * and the data relative to the most played song and most active player.
+     */
     public void sendSongList(){
         try {
             this.outputStream = client.getOutputStream();
@@ -53,6 +70,12 @@ public class MainServer {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Receive the selected song's name
+     * @return String, the song selected by the client
+     * @throws Exception
+     */
     public String receiveSelectedSong() throws Exception {
         String selectedSong;
         this.inputStream = client.getInputStream();
@@ -60,6 +83,12 @@ public class MainServer {
         selectedSong = this.dataInputStream.readUTF();
         return selectedSong;
     }
+
+    /**
+     * Deserialazes the GeneralData object
+     * containing the most played song and most active player data
+     * @throws Exception
+     */
     public void loadGeneralData() throws Exception{
         FileInputStream fi = null;
         fi = new FileInputStream(new File("code/generalData.txt"));
@@ -68,6 +97,11 @@ public class MainServer {
         oi.close();
         fi.close();
     }
+
+    /**
+     * Serializes the GeneralData object
+     * @throws Exception
+     */
     public void storeGeneralData() throws Exception{
         FileOutputStream f = new FileOutputStream(new File("code/generalData.txt"));
         ObjectOutputStream o = new ObjectOutputStream(f);
@@ -75,6 +109,13 @@ public class MainServer {
         o.close();
         f.close();
     }
+
+    /**
+     * takes the song's name chosen by the client, and sends them the corresponding
+     * midi file via the client socket
+     * @param song
+     * @throws Exception
+     */
     public void sendChosenSong(String song) throws Exception{
         String songmid = song + ".mid";
         File songsend = new File("code/"+songmid);
@@ -90,10 +131,7 @@ public class MainServer {
         this.outputStream.close();
     }
 
-    public void selectSong() throws Exception{
 
-
-    }
     public static void main(String[] args) throws Exception{
 
         MainServer server = new MainServer();

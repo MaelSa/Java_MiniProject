@@ -10,7 +10,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class for a graphic interface for the client to select the song they want to play
+ */
 public class GraphingSongSelection {
+    /**
+     * Initializes a graphic interface and sends the client's choice to the server
+     * @param songList
+     * @param client
+     */
     public GraphingSongSelection(String[] songList, MainClient client){
         System.out.println(songList[1]);
         JFrame frame = new JFrame("Javaoke");
@@ -28,6 +36,9 @@ public class GraphingSongSelection {
         JComboBox<String> songs = new JComboBox<String>(stringsComboBox);
         submitButton.addActionListener(new ActionListener() {
             @Override
+            /**
+             * Sends the client's choice to the server
+             */
             public void actionPerformed(ActionEvent actionEvent) {
                 Object songselected = songs.getSelectedItem();
                 String songselectedString = (String) songselected;

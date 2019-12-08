@@ -11,6 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Class for the client side of the Javaoke
+ */
 public class MainClient {
     Socket socket;
     private String name;
@@ -20,6 +23,10 @@ public class MainClient {
     private DataInputStream dataInputStream;
     private FileOutputStream fileOutputStream;
     private BufferedOutputStream bufferedOutputStream;
+
+    /**
+     * Creates the client and connects it to the server via socket
+     */
     MainClient(){
         try {
             System.out.println("Attempting to reach server");
@@ -39,6 +46,13 @@ public class MainClient {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Receives the string containing the name of all the songs available on the server,
+     * but also the data for the most played song and most active player
+     * @return
+     * @throws IOException
+     */
     public String receiveSongList() throws IOException {
         this.inputStream = socket.getInputStream();
         this.dataInputStream = new DataInputStream(this.inputStream);
@@ -46,13 +60,18 @@ public class MainClient {
         return songList;
     }
 
+    /**
+     * Transforms the string containing the songs into a list
+     * @param songList
+     * @return
+     */
     public List<String> songStringToList(String songList){
         List<String> list = new ArrayList<String>();
         String str[] = songList.split("\n");
         list = Arrays.asList(str);
-        System.out.println(list.get(list.size() -1  ));
         return list;
     }
+
 
     public String selectSong(String songListString, List<String> songListList) throws Exception{
         String choice = "";
@@ -74,6 +93,10 @@ public class MainClient {
         return choice;
     }
 
+    /**
+     * Receive the midi file containing the song from the server
+     * @throws Exception
+     */
     public void receiveSongFile() throws Exception{
         int bytesread;
         int current = 0;
@@ -90,6 +113,11 @@ public class MainClient {
         this.bufferedOutputStream.write(mybyte,0, current);
         this.bufferedOutputStream.flush();
     }
+
+    /**
+     * Plays the last received song
+     * @throws Exception
+     */
     public void playSong() throws Exception{
         JLabel label = new JLabel();
         LyricsListener listener = new LyricsListener(label);
@@ -99,14 +127,7 @@ public class MainClient {
         InputStream is = new BufferedInputStream(new FileInputStream(new File("code/received.mid")));
         sequencer.setSequence(is);
         sequencer.start();
-        //Scanner scanner = new Scanner(System.in);
-        //float speedModifier;
-        //String speedModifierString;
-        //ettings settings = new Settings(sequencer);
 
-        //while(sequencer.getTickPosition() < sequencer.getTickLength() - 10000){
-        //    settings.modifySpeed();
-        //}
         GraphicDuringSong simpleJButton = new GraphicDuringSong(sequencer, label);
 
     }
@@ -118,7 +139,6 @@ public class MainClient {
         List<String> songListList = client.songStringToList(songListString);
         String[] strarray = songListList.toArray(new String[0]);
         GraphingSongSelection graphingSongSelection = new GraphingSongSelection(strarray, client);
-        //String choice = client.selectSong(songListString, songListList);
         client.receiveSongFile();
         System.out.println("received");
         client.playSong();

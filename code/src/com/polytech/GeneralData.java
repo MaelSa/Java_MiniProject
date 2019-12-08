@@ -8,15 +8,25 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+/**
+ * Class to store the data for most played song and most active player
+ */
 public class GeneralData implements java.io.Serializable{
     private HashMap<String, Integer> players_info;
     private HashMap<String, Integer> songs_info;
 
+    /**
+     * Constructor inializing empty data lists
+     */
     public GeneralData(){
         players_info = new HashMap<String, Integer>();
         songs_info = new HashMap<String, Integer>();
     }
 
+    /**
+     * Adds the songname to the datas, with a number of played time equals to 1
+     * @param songname
+     */
     public void add_song(String songname){
         //int size = songname.length();
         //String clean_name = songname.substring(size - 5, size - 1);
@@ -24,11 +34,22 @@ public class GeneralData implements java.io.Serializable{
         //System.out.println("Song" + clean_name + " added to song info");
     }
 
+    /**
+     * Adds the players name to the data, with a number of played songs equals to 1
+     * @param player
+     */
     public void add_player(String player){
 
         this.players_info.put(player, 1);
     }
 
+    /**
+     * If the player is already in the data,
+     * it increments the number of songs they played, otherwise it adds
+     * the player's name to the data. Same goes for the songs.
+     * @param song
+     * @param player
+     */
     public void update_song_player(String song, String player){
         String clean_song_name = song.substring(song.length() -5, song.length() - 1);
         if (!this.players_info.containsKey(player)){
@@ -46,6 +67,10 @@ public class GeneralData implements java.io.Serializable{
         //find a way to update both hashtables
     }
 
+    /**
+     * Gets the most played song in the data
+     * @return
+     */
     public ArrayList<String> getMostPlayedSong(){
         ArrayList<String> pair = new ArrayList<String>();
         Integer maxPlayedNumber = 0;
@@ -65,6 +90,10 @@ public class GeneralData implements java.io.Serializable{
         return pair;
         }
 
+    /**
+     * Gets the most active player in the data
+     * @return
+     */
     public ArrayList<String> getMostActivePlayer(){
         ArrayList<String> pair = new ArrayList<String>();
         Integer maxPlayedNumber = 0;

@@ -8,19 +8,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Class for the graphic interface for the song player
+ */
 public class GraphicDuringSong {
-
+    /**
+     * Creates a song player graphic interface.
+     * @param sequencer
+     * @param labelLyrics
+     */
     GraphicDuringSong(Sequencer sequencer, JLabel labelLyrics){
         JFrame f=new JFrame("JavaOke");
         JPanel jPanel = new JPanel();
-        //submit button
         JButton buttonPause=new JButton("Pause");
         JButton buttonResume = new JButton("Resume");
-        //buttonPause.setBounds(100,200,140, 40);
-        //buttonResume.setBounds(100,300,140,40);
-        //labelLyrics.setBounds(100,400,350,60);
         buttonPause.addActionListener(new ActionListener() {
             @Override
+            /**
+             * Pauses the song, make the pause button unclickable and the resume button clickable
+             */
             public void actionPerformed(ActionEvent actionEvent) {
                 sequencer.stop();
                 buttonResume.setEnabled(true);
@@ -30,6 +36,9 @@ public class GraphicDuringSong {
         });
         buttonResume.addActionListener(new ActionListener() {
             @Override
+            /**
+             * Resume the song, and make the button unclickable and the pause button clickable
+             */
             public void actionPerformed(ActionEvent actionEvent) {
                 sequencer.start();
                 buttonResume.setEnabled(false);
@@ -39,6 +48,9 @@ public class GraphicDuringSong {
         JSlider slider = new JSlider(0, 100, 10);
         slider.addChangeListener(new ChangeListener() {
             @Override
+            /**
+             * Change the speed of the song, number on the slider divided by 10
+             */
             public void stateChanged(ChangeEvent changeEvent) {
                 float value = (float) slider.getValue();
                 sequencer.setTempoFactor(value/10);
@@ -57,9 +69,6 @@ public class GraphicDuringSong {
         buttonResume.setEnabled(false);
         f.add(jPanel, BorderLayout.NORTH);
         f.setSize(500,150);
-        //f.show();
-        //f.setLayout(null);
-
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension windowSize = f.getSize();
@@ -72,20 +81,6 @@ public class GraphicDuringSong {
 
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //action listener
-        //b.addActionListener(new ActionListener() {
-
-        //    @Override
-        //    public void actionPerformed(ActionEvent arg0) {
-                //label1.setText("Name has been submitted.");
-
-
-        //});
     }
 
-
-    public static void main(String[] args) {
-        //new SimpleJButton();
-    }
 }

@@ -8,7 +8,14 @@ import java.awt.event.ActionListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/**
+ * Graphic interface for the typing of the player's name
+ */
 public class GraphicName {
+    /**
+     * Contructor to initialize the graphic interface for the client's name
+     * @param client
+     */
     public GraphicName(MainClient client){
         JFrame frame = new JFrame("Javaoke");
         JLabel label = new JLabel("Enter your name");
@@ -34,6 +41,9 @@ public class GraphicName {
         frame.setVisible(true);
         submitButton.addActionListener(new ActionListener() {
             @Override
+            /**
+             * When the name is submitted, is sends it to the server
+             */
             public void actionPerformed(ActionEvent actionEvent) {
                 String name = nameField.getText();
                 try {

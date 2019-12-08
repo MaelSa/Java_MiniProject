@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class to find the midi files in the "code" folder
+ */
 public class findAllMidiFiles {
     public static void main(String args[]){
         String result = "";
@@ -27,6 +30,10 @@ public class findAllMidiFiles {
 
     }
 
+    /**
+     * Returns a string containing the name of all the midi files in the "code" folder
+     * @return
+     */
     public static String midiFilesString(){
         String resultString = "";
         ArrayList<String> resultList = new ArrayList<String>();
@@ -39,6 +46,12 @@ public class findAllMidiFiles {
         return resultString;
     }
 
+    /**
+     * Returns an array with the name of all the midi files in th "code" folder
+     * @param file
+     * @param result
+     * @return
+     */
     public static ArrayList<String> midiFilesArrayList(File file, ArrayList<String> result){
         if(file.isDirectory()){
             File[] temp = file.listFiles();

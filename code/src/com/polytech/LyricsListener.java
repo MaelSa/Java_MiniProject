@@ -7,6 +7,9 @@ import javax.swing.plaf.LabelUI;
 import java.io.*;
 import java.util.Arrays;
 
+/**
+ * Implementation of the MetaEventListener class. This class aims to get the lyrics in the metaevents.
+ */
 public class LyricsListener implements MetaEventListener {
     static Object data;
     static String buffer;
@@ -17,6 +20,9 @@ public class LyricsListener implements MetaEventListener {
         buffer = "";
     }
     @Override
+    /**
+     * Gets the lyrics sent by the sequencer and send them to the GUI.
+     */
     public void meta(MetaMessage metaMessage) {
         //type = 5 means lyrics
         if(metaMessage.getType() == 5) {
