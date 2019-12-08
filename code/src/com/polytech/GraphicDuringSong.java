@@ -59,6 +59,17 @@ public class GraphicDuringSong {
         f.setSize(500,150);
         //f.show();
         //f.setLayout(null);
+
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension windowSize = f.getSize();
+
+
+        int windowX = Math.max(0, (screenSize.width  - windowSize.width ) / 2);
+        int windowY = Math.max(0, (screenSize.height - windowSize.height) / 2);
+
+        f.setLocation(windowX, windowY);
+
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

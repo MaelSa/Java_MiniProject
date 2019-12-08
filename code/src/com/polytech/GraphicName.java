@@ -20,6 +20,17 @@ public class GraphicName {
         frame.add(label, BorderLayout.NORTH);
         frame.add(submitButton, BorderLayout.SOUTH);
         frame.setSize(200,100);
+
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension windowSize = frame.getSize();
+
+
+        int windowX = Math.max(0, (screenSize.width  - windowSize.width ) / 2);
+        int windowY = Math.max(0, (screenSize.height - windowSize.height) / 2);
+
+        frame.setLocation(windowX, windowY);
+
         frame.setVisible(true);
         submitButton.addActionListener(new ActionListener() {
             @Override
