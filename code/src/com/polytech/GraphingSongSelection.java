@@ -16,8 +16,8 @@ import java.util.List;
 public class GraphingSongSelection {
     /**
      * Initializes a graphic interface and sends the client's choice to the server
-     * @param songList
-     * @param client
+     * @param songList: list of song to be chosen
+     * @param client: the client
      */
     public GraphingSongSelection(String[] songList, MainClient client){
         System.out.println(songList[1]);

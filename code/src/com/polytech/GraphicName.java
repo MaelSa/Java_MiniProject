@@ -14,7 +14,7 @@ import java.io.IOException;
 public class GraphicName {
     /**
      * Contructor to initialize the graphic interface for the client's name
-     * @param client
+     * @param client: the client
      */
     public GraphicName(MainClient client){
         JFrame frame = new JFrame("Javaoke");
