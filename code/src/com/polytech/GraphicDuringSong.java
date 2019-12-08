@@ -20,7 +20,7 @@ public class GraphicDuringSong {
      */
     GraphicDuringSong(Sequencer sequencer, JLabel labelLyrics){
         JFrame frame=new JFrame("JavaOke");
-        frame.setLayout(new BorderLayout());
+        frame.setLayout(new FlowLayout());
         JPanel jPanel = new JPanel();
         JButton buttonPause=new JButton("Pause");
         JButton buttonResume = new JButton("Resume");
@@ -67,7 +67,7 @@ public class GraphicDuringSong {
                 buttonUnmute.setEnabled(true);
                 Track track[] = sequencer.getSequence().getTracks();
                 for (int i = 0; i < track.length; i++){
-                    sequencer.setTrackMute(i, true);
+                        sequencer.setTrackMute(i, true);
                 }
             }
         });
@@ -91,15 +91,15 @@ public class GraphicDuringSong {
         jPanel.add(slider);
         frame.add(jPanel, BorderLayout.NORTH);
 
-        //frame.add(buttonPause);
-        //frame.add(buttonResume);
+        frame.add(buttonPause);
+        frame.add(buttonResume);
         buttonResume.setEnabled(false);
         buttonUnmute.setEnabled(false);
-        frame.add(labelLyrics, BorderLayout.SOUTH);
         frame.add(buttonMute, BorderLayout.EAST);
         frame.add(buttonUnmute, BorderLayout.WEST);
+        frame.add(labelLyrics, BorderLayout.SOUTH);
 
-        frame.setSize(300,500);
+        frame.setSize(550,300);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension windowSize = frame.getSize();
