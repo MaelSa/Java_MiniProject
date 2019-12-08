@@ -21,8 +21,6 @@ public class GraphicName {
         JLabel label = new JLabel("Enter your name");
         JButton submitButton = new JButton("Submit");
         JTextField nameField = new JTextField();
-        //submitButton.setBounds(100,300,100,20);
-        //nameField.setBounds(100, 100, 100, 30);
         frame.add(nameField, BorderLayout.CENTER);
         frame.add(label, BorderLayout.NORTH);
         frame.add(submitButton, BorderLayout.SOUTH);

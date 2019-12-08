@@ -47,8 +47,8 @@ public class GeneralData implements java.io.Serializable{
      * If the player is already in the data,
      * it increments the number of songs they played, otherwise it adds
      * the player's name to the data. Same goes for the songs.
-     * @param song
-     * @param player
+     * @param song the name of the song
+     * @param player the name of the player
      */
     public void update_song_player(String song, String player){
         String clean_song_name = song.substring(song.length() -5, song.length() - 1);
@@ -69,7 +69,7 @@ public class GeneralData implements java.io.Serializable{
 
     /**
      * Gets the most played song in the data
-     * @return
+     * @return the name of the most played song
      */
     public ArrayList<String> getMostPlayedSong(){
         ArrayList<String> pair = new ArrayList<String>();
@@ -92,7 +92,7 @@ public class GeneralData implements java.io.Serializable{
 
     /**
      * Gets the most active player in the data
-     * @return
+     * @return the name of the most active player
      */
     public ArrayList<String> getMostActivePlayer(){
         ArrayList<String> pair = new ArrayList<String>();

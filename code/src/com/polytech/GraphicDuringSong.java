@@ -24,6 +24,8 @@ public class GraphicDuringSong {
         JFrame frame=new JFrame("JavaOke");
         frame.setLayout(new FlowLayout());
         JPanel jPanel = new JPanel();
+        JLabel labelSlider = new JLabel("Speed");
+        JLabel labelSlider1 = new JLabel("Pitch");
         JButton buttonPause=new JButton("Pause");
         JButton buttonResume = new JButton("Resume");
         JButton buttonMute = new JButton("Mute");
@@ -105,7 +107,9 @@ public class GraphicDuringSong {
         slider.setMajorTickSpacing(200);
         slider.setMinorTickSpacing(100);
         jPanel.add(slider);
+        jPanel.add(labelSlider);
         jPanel.add(slider1);
+        jPanel.add(labelSlider1);
         frame.add(jPanel, BorderLayout.NORTH);
 
         frame.add(buttonPause);
