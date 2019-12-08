@@ -18,7 +18,7 @@ public class LyricsListener implements MetaEventListener {
         super();
         jLabel = label;
         buffer = "";
-    }
+    } 
     @Override
     /**
      * Gets the lyrics sent by the sequencer and send them to the GUI.
